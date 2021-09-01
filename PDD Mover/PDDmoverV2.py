@@ -9,8 +9,8 @@ from genericpath import isfile
 
 #MAIN WINDOW SETTINGS
 gui = tk.Tk()
-gui.geometry = "400x400"
-gui.title = "PPD Mover"
+gui.geometry("400x400")
+gui.title("PPD mover")
 gui.resizable(False,False)
 
 #VARIABLES
@@ -150,12 +150,16 @@ def songsDirSave():
 
 #UI FOR SONGS SELECT
 songsSelectLabel = tk.Label(gui, text="Select Directory")
-songsSelectLabel.grid(row=0,column=0)
+songsSelectLabel.place(relx=0.09,rely=0.05)
 
 songsSelectEntry = tk.Entry(gui, textvariable=songsPath)
-songsSelectEntry.grid(row=0,column=0)
+songsSelectEntry.place(relx=0.05,rely=0.1)
 
-songsFolderFind = tk.Button
+songsFolderFind = tk.Button(gui, text="select", command=getSongsDirPath)
+songsFolderFind.place(relx=0.4,rely=0.09)
+
+songsFolderSave = tk.Button(gui, text="save folder", command=songsDirSave)
+songsFolderSave.place(relx=0.05,rely=0.17)
 
 #ZIP FILE SELECTION
 
@@ -220,19 +224,19 @@ def deleteZipFile():
 
 #UI FOR ZIP SELECT
 zipSelectLabel = tk.Label(gui, text="Select .zip file")
-zipSelectLabel.grid(row=6, column=0)
+zipSelectLabel.place(relx=0.09,rely=0.3)
 
 zipSelectEntry = tk.Entry(gui, textvariable=zipPath)
-zipSelectEntry.grid(row=6, column=1)
+zipSelectEntry.place(relx=0.05,rely=0.35)
 
-zipFileFind = tk.Button(gui, text="Browse files", command=getZip())
-zipFileFind.grid(row=6, column=2)
+zipFileFind = tk.Button(gui, text="Browse files", command=getZip)
+zipFileFind.place(relx=0.4,rely=0.34)
 
-moveFileButton = tk.Button(gui, text="Move", command=moveFile())
-moveFileButton.grid(row=10, column=0)
+moveFileButton = tk.Button(gui, text="Move", command=moveFile)
+moveFileButton.place(relx=0.05, rely=0.42)
 
-changeDirectory = tk.Button(gui, text="Change directory", command=getStartingFolder())
-changeDirectory.grid(row=12,column=0)
+changeDirectory = tk.Button(gui, text="Change directory", command=getStartingFolder)
+changeDirectory.place(relx=0.2, rely=0.42)
 
 
 #REMOVE README CHECKBOX CODE
@@ -259,7 +263,7 @@ def checkRemoveReadmeInitial():
 #REMOVE README UI
 checkRemoveReadmeInitial()
 removeReadMeBox = tk.Checkbutton(text="remove readme.txt", command = checkRemoveReadme, variable=removeReadMe, onvalue=True, offvalue=False)
-removeReadMeBox.grid(row=12, column=2)
+removeReadMeBox.place(relx=0.05,rely=0.70)
 
 #SAVES DELETE BUTTON
 def deleteSaves():
@@ -270,7 +274,7 @@ def deleteSaves():
 
 #SAVES DELETE BUTTON UI
 deleteSavesButton = tk.Button(text = "delete saves", command=deleteSaves)
-deleteSavesButton.grid(row=15,column=1)
+deleteSavesButton.place(relx=0.05,rely=0.63)
 
 #REMOVE ZIP FILE
 removeZipFile.set(False)
@@ -297,7 +301,7 @@ def checkRemoveZip():
 
 #REMOVE ZIP FILE UI
 removeZipBox = tk.Checkbutton(text = "remove .zip", variable=removeZipFile, command=checkRemoveZip, onvalue=True, offvalue=False)
-removeZipBox.grid(row=16, column=1)
+removeZipBox.place(relx=0.05,rely=0.75)
 
 #I still need to write the error handling code
 
