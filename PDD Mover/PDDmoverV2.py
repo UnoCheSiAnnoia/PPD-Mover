@@ -51,8 +51,6 @@ def fileSetup():
         dirLines.append("\n")
         dirLines.append("Box 1:\n")
         dirLines.append("Unchecked\n")
-        dirLines.append("Box 2:\n")
-        dirLines.append("Unchecked")
         textFile.writelines(dirLines)
         textFile.close
 
@@ -75,9 +73,6 @@ def fileCheck():
     def box1Append():
         dirLines.append("Box 1:\n")
         dirLines.append("Unchecked\n")
-    def box2Append():
-        dirLines.append("Box 2:\n")
-        dirLines.append("Unchecked\n")
 
     #based on the linecount adds the missing line
     if(linecount == 0):
@@ -86,30 +81,19 @@ def fileCheck():
         dirLines.append("\n")
         startingAppend()
         box1Append()
-        box2Append()
         textFile.writelines(dirLines)
     elif(linecount < 3):
         startingAppend()
         box1Append()
-        box2Append()
         textFile.writelines(dirLines)
     elif(linecount < 4):
         dirLines.append("\n")
         box1Append()
-        box2Append()
         textFile.writelines(dirLines)
     elif(linecount < 5):
         box1Append()
-        box2Append()
         textFile.writelines(dirLines)
     elif(linecount < 6):
-        dirLines.append("Unchecked\n")
-        box2Append()
-        textFile.writelines(dirLines)
-    elif(linecount < 7):
-        box2Append()
-        textFile.writelines(dirLines)
-    elif(linecount < 8):
         dirLines.append("Unchecked\n")
         textFile.writelines(dirLines)
 
@@ -119,13 +103,9 @@ def fileCheck():
     if(dirLines[2] != "Starting folder:\n"):
         dirLines[2] = "Starting folder:\n"
     if(dirLines[4] != "Box 1:\n"):
-        dirLines[4] = "Box 1:\n"                                                                #two things i could add if i wanted to:
-    if(dirLines[5] != "Unchecked\n" and dirLines[5] != "Checked\n"):                            #-optimize this part of code a bit to not check every line
-        dirLines[5] = "Checked\n"                                                               #this first thing isnt really that needed tbh so I'll think about it
-    if(dirLines[6] != "Box 2:\n"):                                                              #-check the existance of the directory saved, I'll add this later
-        dirLines[6] = "Box 2:\n"
-    if(dirLines[7] != "Unchecked\n" and dirLines[7] != "Checked\n"):
-        dirLines[7] = "Checked"
+        dirLines[4] = "Box 1:\n"                                                                
+    if(dirLines[5] != "Unchecked\n" and dirLines[5] != "Checked\n"):                            
+        dirLines[5] = "Unchecked\n"                                                             
     textFile.truncate(0)
     textFile.writelines(dirLines)
     textFile.close()
@@ -246,7 +226,7 @@ removeZipFile.set(False)
 def checkRemoveZipInitial():
     fileCheck()
     global dirLines
-    if(dirLines[7] == "Checked\n"):
+    if(dirLines[5] == "Checked\n"):
         removeZipFile.set(True)
     else:
         removeZipFile.set(False)
@@ -256,9 +236,9 @@ def checkRemoveZip():
     global dirLines
     textFile = open(textDir.get(), "w")
     if(removeZipFile.get()):
-        dirLines[7] = "Checked\n"
+        dirLines[5] = "Checked\n"
     else:
-        dirLines[7] = "Unchecked\n"
+        dirLines[5] = "Unchecked\n"
     textFile.truncate(0)
     textFile.writelines(dirLines)
     textFile.close()
