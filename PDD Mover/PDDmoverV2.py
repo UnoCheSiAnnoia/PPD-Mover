@@ -2,6 +2,7 @@ import tkinter as tk
 import os
 import sys
 from tkinter import filedialog
+from tkinter import messagebox
 from tkinter.constants import DISABLED
 import zipfile
 from genericpath import isfile
@@ -28,32 +29,45 @@ removeZipFile = tk.BooleanVar()
 #SAVES READING SETUP
 def setTextLocation():
     textDir.set(os.path.join(sys.path[0], "Saves", "Saves_File.txt"))        #in future make a way to have a file even if someone changes the name of the file
+    savesFindingError()
 
 
 #puts all the lines of the saves file in the dirLines list
 def fileRead():
+    savesFindingError()
     textFile = open(textDir.get(), "r")
     global dirLines
     dirLines = textFile.readlines()
     textFile.close()
+
+def savesFindingError():
+    if(os.path.exists(textDir.get())):
+        return
+    else:
+        messagebox.showerror("File not found","the program was unable to locate the saves folder, make sure it is located into a folder called \"Saves\" and that the file is called \"Saves_File.txt\", then restart the program")
+        gui.destroy()
 
 
 #setups the saves file. This is meant for an empty file.
 def fileSetup():
     fileRead()
     global dirLines
+    if(dirLines==[]):
+        appendToEmpty()
+
+def appendToEmpty():
+    global dirLines
+    dirLines = []
     directory = textDir.get()
     textFile = open(directory, "w")
-    if(dirLines==[]):
-        dirLines.append("PPD folder:\n")
-        dirLines.append("\n")
-        dirLines.append("Starting folder:\n")
-        dirLines.append("\n")
-        dirLines.append("Box 1:\n")
-        dirLines.append("Unchecked\n")
-        textFile.writelines(dirLines)
-        textFile.close
-
+    dirLines.append("PPD folder:\n")
+    dirLines.append("\n")
+    dirLines.append("Starting folder:\n")
+    dirLines.append("\n")
+    dirLines.append("Box 1:\n")
+    dirLines.append("Unchecked\n")
+    textFile.writelines(dirLines)
+    textFile.close
 
 #checks if the saves file is different from what it should be
 def fileCheck():
@@ -172,6 +186,10 @@ def readStartFromFile():
     fileCheck()
     global dirLines
     dirToUse = dirLines[3].rstrip("\n")
+    if(os.path.exists(dirToUse)):
+        return
+    elif(dirToUse!=""):
+            messagebox.showerror("Directory not found", "the starting directory you set up was not found, if you are sure the directory exists, try to select it once more")
     textStartDir.set(dirToUse)
 
 def getZip():                                            
@@ -191,6 +209,8 @@ def moveFile():
         unzip()
         if(removeZipFile.get()):
             os.remove(zipPath.get().rstrip("\n"))
+    else:
+        messagebox.showerror("Zip file not found", "the selected zip file was not found by the program")
 
 
 #UI FOR ZIP SELECT
@@ -215,6 +235,7 @@ def deleteSaves():
     textFile = open(textDir.get(), "w")
     textFile.truncate(0)
     textFile.close()
+    appendToEmpty()
 
 #SAVES DELETE BUTTON UI
 deleteSavesButton = tk.Button(text = "delete saves", command=deleteSaves)
