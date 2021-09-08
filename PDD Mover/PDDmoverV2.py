@@ -200,8 +200,13 @@ def getZip():
 
 #uses split to get file name, puts it to unzip in the songs folder
 def unzip():
-    toUnzip = zipfile.ZipFile(zipPath.get().rstrip("\n"), mode="r")
-    toUnzip.extractall(path = songsPath.get().rstrip("\n"))
+    
+    pathToExtract = songsPath.get().rstrip("\n")
+    if(os.path.exists(pathToExtract)):
+        toUnzip = zipfile.ZipFile(zipPath.get().rstrip("\n"), mode="r")
+        toUnzip.extractall(path = pathToExtract)
+    else:
+        messagebox.showerror("Location not found", "the location you selected to move the zip file into was not found")
 
 def moveFile():
     zipFile = zipPath.get().rstrip("\n")
@@ -211,6 +216,7 @@ def moveFile():
             os.remove(zipPath.get().rstrip("\n"))
     else:
         messagebox.showerror("Zip file not found", "the selected zip file was not found by the program")
+        return
 
 
 #UI FOR ZIP SELECT
