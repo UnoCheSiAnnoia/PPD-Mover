@@ -2,8 +2,8 @@ import tkinter as tk
 import os
 import sys
 from tkinter import filedialog
+from tkinter.constants import DISABLED
 import zipfile
-import shutil
 from genericpath import isfile
 
 
@@ -15,7 +15,7 @@ gui.resizable(False,False)
 
 #VARIABLES
 textDir = tk.StringVar()
-dirLines = ["placeholder"]
+dirLines = []
 songsDir = tk.StringVar()
 songsPath = tk.StringVar()
 startDir = tk.StringVar()
@@ -40,28 +40,30 @@ def fileRead():
 
 #setups the saves file. This is meant for an empty file.
 def fileSetup():
+    fileRead()
     global dirLines
     directory = textDir.get()
     textFile = open(directory, "w")
-    dirLines.append("PPD folder:\n")
-    dirLines.append("\n")
-    dirLines.append("Starting folder:\n")
-    dirLines.append("\n")
-    dirLines.append("Box 1:\n")
-    dirLines.append("Unchecked\n")
-    dirLines.append("Box 2:\n")
-    dirLines.append("Unchecked")
-    textFile.writelines(dirLines)
-    textFile.close
+    if(dirLines==[]):
+        dirLines.append("PPD folder:\n")
+        dirLines.append("\n")
+        dirLines.append("Starting folder:\n")
+        dirLines.append("\n")
+        dirLines.append("Box 1:\n")
+        dirLines.append("Unchecked\n")
+        dirLines.append("Box 2:\n")
+        dirLines.append("Unchecked")
+        textFile.writelines(dirLines)
+        textFile.close
 
 
 #checks if the saves file is different from what it should be
 def fileCheck():
     setTextLocation()
+    fileRead()
     global dirLines
     textFile = open(textDir.get(), "w")
     linecount = 0
-    fileRead()
     #the number of lines is used later for checking if lines are missing
     for x in dirLines:
         linecount+=1
@@ -131,11 +133,17 @@ def fileCheck():
 
 #PPD SONGS FOLDER SELECTION
 fileCheck()
-songsDir = dirLines[1].rstrip("\n")
+songsDir.set(dirLines[1].rstrip("\n"))
+
+def getStartingDirPath():
+    fileCheck()
+    global dirLines
+    songsPath.set(dirLines[1])
 
 def getSongsDirPath():
     selectedFolder = filedialog.askdirectory()
-    songsPath.set(selectedFolder)
+    if(selectedFolder != ""):
+        songsPath.set(selectedFolder)
 
 #the path should be in dirLines[1]
 def songsDirSave():
@@ -149,17 +157,19 @@ def songsDirSave():
     textFile.close()
 
 #UI FOR SONGS SELECT
-songsSelectLabel = tk.Label(gui, text="Select Directory")
-songsSelectLabel.place(relx=0.09,rely=0.05)
+getStartingDirPath()
 
-songsSelectEntry = tk.Entry(gui, textvariable=songsPath)
-songsSelectEntry.place(relx=0.05,rely=0.1)
+songsSelectLabel = tk.Label(gui, text="Select Directory")
+songsSelectLabel.place(x=36,y=20)
+
+songsSelectEntry = tk.Entry(gui, textvariable=songsPath, state=DISABLED)
+songsSelectEntry.place(x=20,y=40)
 
 songsFolderFind = tk.Button(gui, text="select", command=getSongsDirPath)
-songsFolderFind.place(relx=0.4,rely=0.09)
+songsFolderFind.place(x=160,y=36)
 
 songsFolderSave = tk.Button(gui, text="save folder", command=songsDirSave)
-songsFolderSave.place(relx=0.05,rely=0.17)
+songsFolderSave.place(x=20,y=68)
 
 #ZIP FILE SELECTION
 
@@ -184,113 +194,67 @@ def readStartFromFile():
     dirToUse = dirLines[3].rstrip("\n")
     textStartDir.set(dirToUse)
 
-def getZip():                                            #I suddenly remembered how the code i wrote in the previous code worked
-    readStartFromFile()                                  #So i can use it now, Yay!
+def getZip():                                            
+    readStartFromFile()                                  
     selectedFile = filedialog.askopenfilename(initialdir=textStartDir.get(), filetypes=[("Zip files", "*.zip")])
-    zipPath.set(selectedFile)
+    if(selectedFile != ""):
+        zipPath.set(selectedFile)
 
 #uses split to get file name, puts it to unzip in the songs folder
 def unzip():
-    pathSplit = os.path.split(zipPath.get())
-    zipName = pathSplit[1]
-    unzipLocation = os.path.join(songsPath.get(), zipName)
-    toUnzip = zipfile.ZipFile(unzipLocation, mode="r")
-    toUnzip.extractall(path = songsPath.get())
+    toUnzip = zipfile.ZipFile(zipPath.get().rstrip("\n"), mode="r")
+    toUnzip.extractall(path = songsPath.get().rstrip("\n"))
 
 def moveFile():
-    zipFile = zipPath.get()
-    folder = songsPath.get()
+    zipFile = zipPath.get().rstrip("\n")
     if(os.path.exists(zipFile)):
-        shutil.move(zipFile, folder)
         unzip()
-        if(removeReadMe.get()):
-            deleteReadMe()
         if(removeZipFile.get()):
-            pass
-
-def deleteReadMe():
-    fileList = os.listdir(songsPath.get())
-    for x in fileList:
-        if(isfile(os.path.join(songsPath.get(), x))):
-            if(x == "readme.txt" or x == "ReadMe.txt" or x == "Readme.txt" or x == "README.txt"):
-                os.remove(os.path.join(songsPath.get(), x))
-
-def deleteZipFile():
-    pathSplit = os.path.split(zipPath.get())
-    zipName = pathSplit[1]
-    toDelete = os.path.join(songsPath.get(), zipName)
-    os.remove(toDelete)
+            os.remove(zipPath.get().rstrip("\n"))
 
 
 #UI FOR ZIP SELECT
 zipSelectLabel = tk.Label(gui, text="Select .zip file")
-zipSelectLabel.place(relx=0.09,rely=0.3)
+zipSelectLabel.place(x=36,y=120)
 
-zipSelectEntry = tk.Entry(gui, textvariable=zipPath)
-zipSelectEntry.place(relx=0.05,rely=0.35)
+zipSelectEntry = tk.Entry(gui, textvariable=zipPath, state=DISABLED)
+zipSelectEntry.place(x=20,y=140)
 
 zipFileFind = tk.Button(gui, text="Browse files", command=getZip)
-zipFileFind.place(relx=0.4,rely=0.34)
+zipFileFind.place(x=160,y=136)
 
 moveFileButton = tk.Button(gui, text="Move", command=moveFile)
-moveFileButton.place(relx=0.05, rely=0.42)
+moveFileButton.place(x=20,y=168)
 
 changeDirectory = tk.Button(gui, text="Change directory", command=getStartingFolder)
-changeDirectory.place(relx=0.2, rely=0.42)
+changeDirectory.place(x=80,y=168)
 
-
-#REMOVE README CHECKBOX CODE
-def checkRemoveReadme():
-    global dirLines
-    fileCheck()
-    textFile = open(textDir.get(), "w")
-    if(removeReadMe.get()):
-        dirLines[5] = "Checked\n"
-    else:
-        dirLines[5] = "Unchecked\n"
-    textFile.truncate(0)
-    textFile.writelines(dirLines)
-    textFile.close()
-
-def checkRemoveReadmeInitial():
-    global dirLines
-    fileCheck()
-    if(dirLines[5] == "Checked\n"):
-        removeReadMe.set(True)
-    else:
-        removeReadMe.set(False)
-
-#REMOVE README UI
-checkRemoveReadmeInitial()
-removeReadMeBox = tk.Checkbutton(text="remove readme.txt", command = checkRemoveReadme, variable=removeReadMe, onvalue=True, offvalue=False)
-removeReadMeBox.place(relx=0.05,rely=0.70)
 
 #SAVES DELETE BUTTON
 def deleteSaves():
     textFile = open(textDir.get(), "w")
     textFile.truncate(0)
-    fileCheck()
     textFile.close()
 
 #SAVES DELETE BUTTON UI
 deleteSavesButton = tk.Button(text = "delete saves", command=deleteSaves)
-deleteSavesButton.place(relx=0.05,rely=0.63)
+deleteSavesButton.place(x=20,y=252)
 
 #REMOVE ZIP FILE
 removeZipFile.set(False)
 
 def checkRemoveZipInitial():
-    global dirLines
     fileCheck()
+    global dirLines
     if(dirLines[7] == "Checked\n"):
         removeZipFile.set(True)
     else:
         removeZipFile.set(False)
 
 def checkRemoveZip():
+    fileCheck()
     global dirLines
     textFile = open(textDir.get(), "w")
-    fileCheck()
     if(removeZipFile.get()):
         dirLines[7] = "Checked\n"
     else:
@@ -300,8 +264,10 @@ def checkRemoveZip():
     textFile.close()
 
 #REMOVE ZIP FILE UI
+checkRemoveZipInitial()
+
 removeZipBox = tk.Checkbutton(text = "remove .zip", variable=removeZipFile, command=checkRemoveZip, onvalue=True, offvalue=False)
-removeZipBox.place(relx=0.05,rely=0.75)
+removeZipBox.place(x=20,y=300)
 
 #I still need to write the error handling code
 
