@@ -10,7 +10,7 @@ from genericpath import isfile
 
 #MAIN WINDOW SETTINGS
 gui = tk.Tk()
-gui.geometry("400x400")
+gui.geometry("450x450")
 gui.title("PPD mover")
 gui.resizable(False,False)
 
@@ -245,7 +245,7 @@ def deleteSaves():
 
 #SAVES DELETE BUTTON UI
 deleteSavesButton = tk.Button(text = "delete saves", command=deleteSaves)
-deleteSavesButton.place(x=20,y=252)
+deleteSavesButton.place(x=20,y=322)
 
 #REMOVE ZIP FILE
 removeZipFile.set(False)
@@ -274,9 +274,29 @@ def checkRemoveZip():
 checkRemoveZipInitial()
 
 removeZipBox = tk.Checkbutton(text = "remove .zip", variable=removeZipFile, command=checkRemoveZip, onvalue=True, offvalue=False)
-removeZipBox.place(x=20,y=300)
+removeZipBox.place(x=20,y=370)
 
-#I still need to write the error handling code
+#UI FOR THE VIDEO SELECT
+selectVideoLabel = tk.Label(gui, text="Select the mp4")
+selectVideoLabel.place(x=36, y=220)
+
+selectVideoEntry = tk.Entry(gui, state=DISABLED)
+selectVideoEntry.place(x=20, y=240)
+
+selectSongLabel = tk.Label(gui, text="Select the song folder")
+selectSongLabel.place(x=185, y=220)
+
+selectSongEntry = tk.Entry(gui, state=DISABLED)
+selectSongEntry.place(x=180, y=240)
+
+selectVideoButton = tk.Button(text="Select")
+selectVideoButton.place(x=55, y=268)
+
+selectSongButton = tk.Button(text="Select folder")
+selectSongButton.place(x=205, y=268)
+
+moveVideoButton = tk.Button(text="Move video")
+moveVideoButton.place(x=325, y=235)
 
 gui.mainloop()
 
