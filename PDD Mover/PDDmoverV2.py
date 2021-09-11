@@ -276,26 +276,57 @@ checkRemoveZipInitial()
 removeZipBox = tk.Checkbutton(text = "remove .zip", variable=removeZipFile, command=checkRemoveZip, onvalue=True, offvalue=False)
 removeZipBox.place(x=20,y=370)
 
+#VIDEO SELECT
+
+#selectVideoButton code
+videoPath = tk.StringVar()
+
+def selectVideo():
+    video = filedialog.askopenfilename()
+    if(video != ""):
+        if(os.path.exists(video)):
+            videoPath.set(video)
+        else:
+            messagebox.showerror("File not found", "the program was unable to find the video you selected")
+
+#selectSongButton code
+selectedSongPath = tk.StringVar()
+
+def selectSong():
+    song = filedialog.askdirectory(startDir=songsPath.get().rstrip("\n"))
+    if(song != ""):
+        if(os.path.exists(song)):
+            selectedSongPath.set(song)
+        else:
+            messagebox.showerror("File not found", "The program was unable to find the selected folder")
+
+#moveVideoButton code
+def moveVideo():
+    pathSplit = os.path.split(videoPath.get())
+    videoName = pathSplit[1]
+    os.replace(videoPath.get(), os.path.join(selectedSongPath.get(), videoName))
+
+
 #UI FOR THE VIDEO SELECT
 selectVideoLabel = tk.Label(gui, text="Select the mp4")
 selectVideoLabel.place(x=36, y=220)
 
-selectVideoEntry = tk.Entry(gui, state=DISABLED)
+selectVideoEntry = tk.Entry(gui, state=DISABLED, textvariable=videoPath)
 selectVideoEntry.place(x=20, y=240)
 
 selectSongLabel = tk.Label(gui, text="Select the song folder")
 selectSongLabel.place(x=185, y=220)
 
-selectSongEntry = tk.Entry(gui, state=DISABLED)
+selectSongEntry = tk.Entry(gui, state=DISABLED, textvariable=selectedSongPath)
 selectSongEntry.place(x=180, y=240)
 
-selectVideoButton = tk.Button(text="Select")
+selectVideoButton = tk.Button(text="Select", command=selectVideo)
 selectVideoButton.place(x=55, y=268)
 
-selectSongButton = tk.Button(text="Select folder")
+selectSongButton = tk.Button(text="Select folder", command=selectSong)
 selectSongButton.place(x=205, y=268)
 
-moveVideoButton = tk.Button(text="Move video")
+moveVideoButton = tk.Button(text="Move video", command=moveVideo)
 moveVideoButton.place(x=325, y=235)
 
 gui.mainloop()
