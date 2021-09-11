@@ -1,5 +1,5 @@
-# PDD-Mover
-this should help putting new songs in the Project Diva emulator, PDD, but since I am making it it won't work for a while
+# PPD-Mover
+this should help putting new songs in the Project Diva emulator, PPD, but since I am making it it won't work for a while
 
 ### What should this thing do?
 after you select the song directory and the zip file to move, you should be able to move and unzip the file just with a click, putting also a video in there is still work in progress
