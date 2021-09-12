@@ -24,7 +24,8 @@ textStartDir = tk.StringVar()
 zipPath = tk.StringVar()
 removeReadMe = tk.BooleanVar()
 removeZipFile = tk.BooleanVar()
-
+videoPath = tk.StringVar()
+selectedSongPath = tk.StringVar()
 
 #SAVES READING SETUP
 def setTextLocation():
@@ -187,10 +188,9 @@ def readStartFromFile():
     global dirLines
     dirToUse = dirLines[3].rstrip("\n")
     if(os.path.exists(dirToUse)):
-        return
+        textStartDir.set(dirToUse)
     elif(dirToUse!=""):
-            messagebox.showerror("Directory not found", "the starting directory you set up was not found, if you are sure the directory exists, try to select it once more")
-    textStartDir.set(dirToUse)
+            messagebox.showwarning("Directory not found", "the starting directory you set up was not found, if you are sure the directory exists, try to select it once more")
 
 def getZip():                                            
     readStartFromFile()                                  
@@ -206,7 +206,10 @@ def unzip():
         toUnzip = zipfile.ZipFile(zipPath.get().rstrip("\n"), mode="r")
         toUnzip.extractall(path = pathToExtract)
     else:
-        messagebox.showerror("Location not found", "the location you selected to move the zip file into was not found")
+        if(pathToExtract == ""):
+            messagebox.showwarning("No location selected", "You haven't selected a directory to move the zip file to, please select one and try again")
+        else:
+            messagebox.showerror("Location not found", "the location you selected to move the zip file into was not found")
 
 def moveFile():
     zipFile = zipPath.get().rstrip("\n")
@@ -215,8 +218,10 @@ def moveFile():
         if(removeZipFile.get()):
             os.remove(zipPath.get().rstrip("\n"))
     else:
-        messagebox.showerror("Zip file not found", "the selected zip file was not found by the program")
-        return
+        if(zipFile == ""):
+            messagebox.showwarning("No file selected", "You have not selected a zip file, please select one and try again")
+        else:
+            messagebox.showerror("Zip file not found", "the selected zip file was not found by the program")
 
 
 #UI FOR ZIP SELECT
@@ -279,7 +284,6 @@ removeZipBox.place(x=20,y=370)
 #VIDEO SELECT
 
 #selectVideoButton code
-videoPath = tk.StringVar()
 
 def selectVideo():
     video = filedialog.askopenfilename()
@@ -290,7 +294,6 @@ def selectVideo():
             messagebox.showerror("File not found", "the program was unable to find the video you selected")
 
 #selectSongButton code
-selectedSongPath = tk.StringVar()
 
 def selectSong():
     song = filedialog.askdirectory(initialdir=songsPath.get().rstrip("\n"))
