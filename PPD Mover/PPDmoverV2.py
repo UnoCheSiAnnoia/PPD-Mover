@@ -10,7 +10,7 @@ from genericpath import isfile
 
 #MAIN WINDOW SETTINGS
 gui = tk.Tk()
-gui.geometry("400x400")
+gui.geometry("450x450")
 gui.title("PPD mover")
 gui.resizable(False,False)
 
@@ -245,7 +245,7 @@ def deleteSaves():
 
 #SAVES DELETE BUTTON UI
 deleteSavesButton = tk.Button(text = "delete saves", command=deleteSaves)
-deleteSavesButton.place(x=20,y=252)
+deleteSavesButton.place(x=20,y=322)
 
 #REMOVE ZIP FILE
 removeZipFile.set(False)
@@ -274,9 +274,83 @@ def checkRemoveZip():
 checkRemoveZipInitial()
 
 removeZipBox = tk.Checkbutton(text = "remove .zip", variable=removeZipFile, command=checkRemoveZip, onvalue=True, offvalue=False)
-removeZipBox.place(x=20,y=300)
+removeZipBox.place(x=20,y=370)
 
-#I still need to write the error handling code
+#VIDEO SELECT
+
+#selectVideoButton code
+videoPath = tk.StringVar()
+
+def selectVideo():
+    video = filedialog.askopenfilename()
+    if(video != ""):
+        if(os.path.exists(video)):
+            videoPath.set(video)
+        else:
+            messagebox.showerror("File not found", "the program was unable to find the video you selected")
+
+#selectSongButton code
+selectedSongPath = tk.StringVar()
+
+def selectSong():
+    song = filedialog.askdirectory(initialdir=songsPath.get().rstrip("\n"))
+    if(song != ""):
+        if(os.path.exists(song)):
+            selectedSongPath.set(song)
+        else:
+            messagebox.showerror("File not found", "The program was unable to find the selected folder")
+
+#moveVideoButton code
+def moveVideo():
+    video = tk.StringVar()
+    song = tk.StringVar()
+    if(videoPath.get() == "" and selectedSongPath.get() == ""):
+        messagebox.showwarning("no files selected", "you need to select a video and the destination for the video before proceeding")
+        return
+    else:
+        if(videoPath.get() == ""):
+            messagebox.showwarning("no file selected", "please select the video you want to move")
+            return
+        else:
+            if(os.path.exists(videoPath.get())):
+                video.set(videoPath.get())
+            else:
+                messagebox.showerror("no video found", "the program was unable to find the selected video")
+                return
+        if(selectedSongPath.get() == ""):
+            messagebox.showwarning("no file selected", "please select the folder where you want to put the video")
+            return
+        else:
+            if(os.path.exists(selectedSongPath.get())):
+                song.set(selectedSongPath.get())
+            else:
+                messagebox.showerror("folder not found", "the program was unable to find the folder")
+    pathSplit = os.path.split(video.get())
+    videoName = pathSplit[1]
+    os.replace(video.get(), os.path.join(song.get(), videoName))
+
+
+#UI FOR THE VIDEO SELECT
+selectVideoLabel = tk.Label(gui, text="Select the mp4")
+selectVideoLabel.place(x=36, y=220)
+
+selectVideoEntry = tk.Entry(gui, state=DISABLED, textvariable=videoPath)
+selectVideoEntry.place(x=20, y=240)
+
+selectSongLabel = tk.Label(gui, text="Select the song folder")
+selectSongLabel.place(x=185, y=220)
+
+selectSongEntry = tk.Entry(gui, state=DISABLED, textvariable=selectedSongPath)
+selectSongEntry.place(x=180, y=240)
+
+selectVideoButton = tk.Button(text="Select", command=selectVideo)
+selectVideoButton.place(x=55, y=268)
+
+selectSongButton = tk.Button(text="Select folder", command=selectSong)
+selectSongButton.place(x=205, y=268)
+
+moveVideoButton = tk.Button(text="Move video", command=moveVideo)
+moveVideoButton.place(x=325, y=235)
 
 gui.mainloop()
 
