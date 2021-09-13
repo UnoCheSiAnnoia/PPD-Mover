@@ -96,6 +96,8 @@ def append_to_empty():
     dirLines.append("\n")
     dirLines.append("Box 1:\n")
     dirLines.append("Unchecked\n")
+    dirLines.append("Video starting folder:\n")
+    dirLines.append("\n")
     textfile.writelines(dirLines)
     textfile.close()
 
@@ -121,6 +123,10 @@ def file_check():
         dirLines.append("Box 1:\n")
         dirLines.append("Unchecked\n")
 
+    def vid_starting_append():
+        dirLines.append("Video starting folder:\n")
+        dirLines.append("\n")
+
     # based on the linecount adds the missing line
     if linecount == 0:
         file_setup()
@@ -128,20 +134,31 @@ def file_check():
         dirLines.append("\n")
         starting_append()
         box1_append()
+        vid_starting_append()
         textfile.writelines(dirLines)
     elif linecount < 3:
         starting_append()
         box1_append()
+        vid_starting_append()
         textfile.writelines(dirLines)
     elif linecount < 4:
         dirLines.append("\n")
         box1_append()
+        vid_starting_append()
         textfile.writelines(dirLines)
     elif linecount < 5:
         box1_append()
+        vid_starting_append()
         textfile.writelines(dirLines)
     elif linecount < 6:
         dirLines.append("Unchecked\n")
+        vid_starting_append()
+        textfile.writelines(dirLines)
+    elif linecount < 7:
+        vid_starting_append()
+        textfile.writelines(dirLines)
+    elif linecount < 8:
+        dirLines.append("\n")
         textfile.writelines(dirLines)
 
     # checks if all the lines have valid values
@@ -386,6 +403,38 @@ def move_video():
     videoName = pathSplit[1]
     os.replace(video.get(), os.path.join(song.get(), videoName))
 
+# Select starting video dir code
+
+
+vidStartingDir = tk.StringVar()
+
+
+def save_initial_vid_dir():
+    file_check()
+    global dirLines
+    textfile = open(textDir.get(), "w")
+    dirLines[7] = vidStartingDir.get() + "\n"
+    textfile.truncate(0)
+    textfile.writelines(dirLines)
+    textfile.close()
+
+
+def read_initial_vid_dir():
+    file_check()
+    global dirLines
+    dirtouse = dirLines[7].rstrip("\n")
+    if os.path.exists(dirtouse):
+        vidStartingDir.set(dirtouse)
+
+
+def get_vid_dir():
+    selectedfolder = filedialog.askdirectory()
+    vidStartingDir.set(selectedfolder)
+    save_initial_vid_dir()
+
+
+read_initial_vid_dir()
+
 
 # UI FOR THE VIDEO SELECT
 
@@ -399,7 +448,7 @@ selectSongEntry.place(x=190, y=240)
 selectVideoButton = tk.Button(text="Select", command=select_video, activebackground="#55d1d0", background="#87e5cf")
 selectVideoButton.place(x=16, y=268)
 
-selectStartingVideoDir = tk.Button(text="Change directory", activebackground="#55d1d0", background="#87e5cf")
+selectStartingVideoDir = tk.Button(text="Change directory", command=get_vid_dir(), activebackground="#55d1d0", background="#87e5cf")
 selectStartingVideoDir.place(x=65, y=268)
 
 selectSongButton = tk.Button(text="Select folder", command=select_song, activebackground="#55d1d0", background="#87e5cf")
