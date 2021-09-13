@@ -53,40 +53,39 @@ selectedSongPath = tk.StringVar()
 # SAVES READING SETUP
 
 
-def settextlocation():
+def set_text_location():
     textDir.set(os.path.join(sys.path[0], "Saves", "Saves_File.txt"))
     # in future make a way to have a file even if someone changes the name of the file
-    savesfindingerror()
+    saves_finding_error()
 
 
 # puts all the lines of the saves file in the dirLines list
-def fileread():
-    savesfindingerror()
+def file_read():
+    saves_finding_error()
     textfile = open(textDir.get(), "r")
     global dirLines
     dirLines = textfile.readlines()
     textfile.close()
 
 
-def savesfindingerror():
+def saves_finding_error():
     if os.path.exists(textDir.get()):
         return
     else:
         messagebox.showerror("File not found", "the program was unable to locate the saves folder, make sure it is "
                                                "located into a folder called \"Saves\" and that the file is called "
                                                "\"Saves_File.txt\", then restart the program")
-        gui.destroy()
 
 
 # setups the saves file. This is meant for an empty file.
-def filesetup():
-    fileread()
+def file_setup():
+    file_read()
     global dirLines
     if not dirLines:
-        appendtoempty()
+        append_to_empty()
 
 
-def appendtoempty():
+def append_to_empty():
     global dirLines
     dirLines = []
     directory = textDir.get()
@@ -103,9 +102,9 @@ def appendtoempty():
 # checks if the saves file is different from what it should be
 
 
-def filecheck():
-    settextlocation()
-    fileread()
+def file_check():
+    set_text_location()
+    file_read()
     global dirLines
     textfile = open(textDir.get(), "w")
     linecount = 0
@@ -114,32 +113,32 @@ def filecheck():
         linecount += 1
 
     # this functions are used to make the code below a bit shorter
-    def startingappend():
+    def starting_append():
         dirLines.append("Starting folder:\n")
         dirLines.append("\n")
 
-    def box1append():
+    def box1_append():
         dirLines.append("Box 1:\n")
         dirLines.append("Unchecked\n")
 
     # based on the linecount adds the missing line
     if linecount == 0:
-        filesetup()
+        file_setup()
     elif linecount < 2:
         dirLines.append("\n")
-        startingappend()
-        box1append()
+        starting_append()
+        box1_append()
         textfile.writelines(dirLines)
     elif linecount < 3:
-        startingappend()
-        box1append()
+        starting_append()
+        box1_append()
         textfile.writelines(dirLines)
     elif linecount < 4:
         dirLines.append("\n")
-        box1append()
+        box1_append()
         textfile.writelines(dirLines)
     elif linecount < 5:
-        box1append()
+        box1_append()
         textfile.writelines(dirLines)
     elif linecount < 6:
         dirLines.append("Unchecked\n")
@@ -160,17 +159,17 @@ def filecheck():
 
 
 # PPD SONGS FOLDER SELECTION
-filecheck()
+file_check()
 songsDir.set(dirLines[1].rstrip("\n"))
 
 
-def getstartingdirpath():
-    filecheck()
+def get_starting_dir_path():
+    file_check()
     global dirLines
     songsPath.set(dirLines[1])
 
 
-def getsongsdirpath():
+def get_songs_dir_path():
     selectedfolder = filedialog.askdirectory()
     if selectedfolder != "":
         songsPath.set(selectedfolder)
@@ -178,8 +177,8 @@ def getsongsdirpath():
 # the path should be in dirLines[1]
 
 
-def songsdirsave():
-    filecheck()
+def songs_dir_save():
+    file_check()
     global dirLines
     global textDir
     textfile = open(textDir.get(), "w")
@@ -191,15 +190,15 @@ def songsdirsave():
 # UI FOR SONGS SELECT
 
 
-getstartingdirpath()
+get_starting_dir_path()
 
 songsSelectEntry = tk.Entry(gui, textvariable=songsPath, state=DISABLED, disabledbackground="#5a676b", disabledforeground="white")
 songsSelectEntry.place(x=15, y=40)
 
-songsFolderFind = tk.Button(gui, text="select", command=getsongsdirpath, activebackground="#55d1d0", background="#87e5cf")
+songsFolderFind = tk.Button(gui, text="select", command=get_songs_dir_path, activebackground="#55d1d0", background="#87e5cf")
 songsFolderFind.place(x=16, y=68)
 
-songsFolderSave = tk.Button(gui, text="save folder", command=songsdirsave, activebackground="#55d1d0", background="#87e5cf")
+songsFolderSave = tk.Button(gui, text="save folder", command=songs_dir_save, activebackground="#55d1d0", background="#87e5cf")
 songsFolderSave.place(x=160, y=36)
 
 # ZIP FILE SELECTION
@@ -207,8 +206,8 @@ songsFolderSave.place(x=160, y=36)
 # the starting directory for zip selection goes in dirLines[3]
 
 
-def savestartingdir():
-    filecheck()
+def save_starting_dir():
+    file_check()
     global dirLines
     textfile = open(textDir.get(), "w")
     dirLines[3] = startDir.get() + "\n"
@@ -217,14 +216,14 @@ def savestartingdir():
     textfile.close()
 
 
-def getstartingfolder():
+def get_starting_folder():
     selectedfolder = filedialog.askdirectory()
     startDir.set(selectedfolder)
-    savestartingdir()
+    save_starting_dir()
 
 
-def readstartfromfile():
-    filecheck()
+def read_start_from_file():
+    file_check()
     global dirLines
     dirtouse = dirLines[3].rstrip("\n")
     if os.path.exists(dirtouse):
@@ -234,8 +233,8 @@ def readstartfromfile():
                                                       " the directory exists, try to select it once more")
 
 
-def getzip():
-    readstartfromfile()
+def get_zip():
+    read_start_from_file()
     selectedfile = filedialog.askopenfilename(initialdir=textStartDir.get(), filetypes=[("Zip files", "*.zip")])
     if selectedfile != "":
         zipPath.set(selectedfile)
@@ -257,7 +256,7 @@ def unzip():
             messagebox.showerror("Location not found", "the location you selected to move the zip file into was not found")
 
 
-def movefile():
+def move_file():
     filezip = zipPath.get().rstrip("\n")
     if os.path.exists(filezip):
         unzip()
@@ -276,35 +275,35 @@ def movefile():
 zipSelectEntry = tk.Entry(gui, textvariable=zipPath, state=DISABLED, disabledbackground="#5a676b", disabledforeground="white")
 zipSelectEntry.place(x=15, y=140)
 
-zipFileFind = tk.Button(gui, text="Browse files", command=getzip, activebackground="#55d1d0", background="#87e5cf")
+zipFileFind = tk.Button(gui, text="Browse files", command=get_zip, activebackground="#55d1d0", background="#87e5cf")
 zipFileFind.place(x=16, y=168)  # 16, 168
 
-moveFileButton = tk.Button(gui, text="Move", command=movefile, activebackground="#55d1d0", background="#87e5cf")
+moveFileButton = tk.Button(gui, text="Move", command=move_file, activebackground="#55d1d0", background="#87e5cf")
 moveFileButton.place(x=160, y=136)  # 160, 136
 
-changeDirectory = tk.Button(gui, text="Change directory", command=getstartingfolder, activebackground="#55d1d0", background="#87e5cf")
+changeDirectory = tk.Button(gui, text="Change directory", command=get_starting_folder, activebackground="#55d1d0", background="#87e5cf")
 changeDirectory.place(x=96, y=168)
 
 
 # SAVES DELETE BUTTON
-def deletesaves():
+def delete_saves():
     textfile = open(textDir.get(), "w")
     textfile.truncate(0)
     textfile.close()
-    appendtoempty()
+    append_to_empty()
 
 # SAVES DELETE BUTTON UI
 
 
-deleteSavesButton = tk.Button(text="delete saves", command=deletesaves, activebackground="#55d1d0", background="#87e5cf")
+deleteSavesButton = tk.Button(text="delete saves", command=delete_saves, activebackground="#55d1d0", background="#87e5cf")
 deleteSavesButton.place(x=16, y=322)
 
 # REMOVE ZIP FILE
 removeZipFile.set(False)
 
 
-def checkremovezipinitial():
-    filecheck()
+def check_remove_zip_initial():
+    file_check()
     global dirLines
     if dirLines[5] == "Checked\n":
         removeZipFile.set(True)
@@ -312,8 +311,8 @@ def checkremovezipinitial():
         removeZipFile.set(False)
 
 
-def checkremovezip():
-    filecheck()
+def check_remove_zip():
+    file_check()
     global dirLines
     textfile = open(textDir.get(), "w")
     if removeZipFile.get():
@@ -327,9 +326,9 @@ def checkremovezip():
 # REMOVE ZIP FILE UI
 
 
-checkremovezipinitial()
+check_remove_zip_initial()
 
-removeZipBox = tk.Checkbutton(variable=removeZipFile, command=checkremovezip, onvalue=True, offvalue=False, background="#4f5454", activebackground="#4f5454", selectcolor="#5a676b", fg="White", activeforeground="White")
+removeZipBox = tk.Checkbutton(variable=removeZipFile, command=check_remove_zip, onvalue=True, offvalue=False, background="#4f5454", activebackground="#4f5454", selectcolor="#5a676b", fg="White", activeforeground="White")
 removeZipBox.place(x=10, y=370)
 
 # VIDEO SELECT
@@ -337,7 +336,7 @@ removeZipBox.place(x=10, y=370)
 # selectVideoButton code
 
 
-def selectvideo():
+def select_video():
     video = filedialog.askopenfilename()
     if video != "":
         if os.path.exists(video):
@@ -348,7 +347,7 @@ def selectvideo():
 # selectSongButton code
 
 
-def selectsong():
+def select_song():
     song = filedialog.askdirectory(initialdir=songsPath.get().rstrip("\n"))
     if song != "":
         if os.path.exists(song):
@@ -359,7 +358,7 @@ def selectsong():
 # moveVideoButton code
 
 
-def movevideo():
+def move_video():
     video = tk.StringVar()
     song = tk.StringVar()
     if videoPath.get() == "" and selectedSongPath.get() == "":
@@ -397,16 +396,16 @@ selectVideoEntry.place(x=15, y=240)
 selectSongEntry = tk.Entry(gui, state=DISABLED, textvariable=selectedSongPath, disabledbackground="#5a676b", disabledforeground="white")
 selectSongEntry.place(x=190, y=240)
 
-selectVideoButton = tk.Button(text="Select", command=selectvideo, activebackground="#55d1d0", background="#87e5cf")
+selectVideoButton = tk.Button(text="Select", command=select_video, activebackground="#55d1d0", background="#87e5cf")
 selectVideoButton.place(x=16, y=268)
 
 selectStartingVideoDir = tk.Button(text="Change directory", activebackground="#55d1d0", background="#87e5cf")
 selectStartingVideoDir.place(x=65, y=268)
 
-selectSongButton = tk.Button(text="Select folder", command=selectsong, activebackground="#55d1d0", background="#87e5cf")
+selectSongButton = tk.Button(text="Select folder", command=select_song, activebackground="#55d1d0", background="#87e5cf")
 selectSongButton.place(x=190, y=268)
 
-moveVideoButton = tk.Button(text="Move video", command=movevideo, activebackground="#55d1d0", background="#87e5cf")
+moveVideoButton = tk.Button(text="Move video", command=move_video, activebackground="#55d1d0", background="#87e5cf")
 moveVideoButton.place(x=325, y=235)
 
 gui.mainloop()
