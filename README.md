@@ -30,7 +30,7 @@ Q: Did you make anything else before this project?
 A: I think i tried a discord bot with python and i followed a tutorial about Unity, is this enough?    
 I also learned some basics of python at school for an activity so aside from the bot I knew some basic python before starting this.   
 ## Things I want to add
-- [ ] Update how the program looks because it is ugly
+- [X] Update how the program looks because it is ugly
 - [ ] Add the possibility to drag and drop files
 - [ ] Add a starting folder also for videos
 - [ ] Maybe make an actual release of this
