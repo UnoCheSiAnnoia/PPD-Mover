@@ -32,7 +32,7 @@ I also learned some basics of python at school for an activity so aside from the
 ## Things I want to add
 - [X] Update how the program looks because it is ugly
 - [ ] Add the possibility to drag and drop files
-- [ ] Add a starting folder also for videos
+- [X ] Add a starting folder also for videos
 - [ ] Maybe make an actual release of this
 - [ ] Remove some options from the main window and make a menu for them
 - [ ] Hide the saves (so not let them be a random .txt file)
