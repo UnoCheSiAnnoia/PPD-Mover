@@ -49,6 +49,7 @@ removeReadMe = tk.BooleanVar()
 removeZipFile = tk.BooleanVar()
 videoPath = tk.StringVar()
 selectedSongPath = tk.StringVar()
+vidStartingDir = tk.StringVar()
 
 # SAVES READING SETUP
 
@@ -354,7 +355,7 @@ removeZipBox.place(x=10, y=370)
 
 
 def select_video():
-    video = filedialog.askopenfilename()
+    video = filedialog.askopenfilename(initialdir=vidStartingDir.get())
     if video != "":
         if os.path.exists(video):
             videoPath.set(video)
@@ -406,9 +407,6 @@ def move_video():
 # Select starting video dir code
 
 
-vidStartingDir = tk.StringVar()
-
-
 def save_initial_vid_dir():
     file_check()
     global dirLines
@@ -448,7 +446,7 @@ selectSongEntry.place(x=190, y=240)
 selectVideoButton = tk.Button(text="Select", command=select_video, activebackground="#55d1d0", background="#87e5cf")
 selectVideoButton.place(x=16, y=268)
 
-selectStartingVideoDir = tk.Button(text="Change directory", command=get_vid_dir(), activebackground="#55d1d0", background="#87e5cf")
+selectStartingVideoDir = tk.Button(text="Change directory", command=get_vid_dir, activebackground="#55d1d0", background="#87e5cf")
 selectStartingVideoDir.place(x=65, y=268)
 
 selectSongButton = tk.Button(text="Select folder", command=select_song, activebackground="#55d1d0", background="#87e5cf")
