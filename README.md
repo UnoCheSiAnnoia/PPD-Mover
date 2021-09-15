@@ -26,6 +26,7 @@ Reasons why I put that button will be explained later.
 more things about why I am doing it like this later
 5. You can press the "move" button to move the video
 ## FAQ (but not really)
+[JP](#faq-jp)    
 Q: Did someone really make you questions?    
 A: No, I am making this up to explain some things is a fancy way.   
 Q: Why did you put that "save folder" button?
