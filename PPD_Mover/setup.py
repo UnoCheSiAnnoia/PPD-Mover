@@ -5,6 +5,7 @@ from cx_Freeze import setup, Executable
 # "packages": ["os"] is used as example only
 build_exe_options = dict(include_files = ["IMG/", "Saves/"])
 
+
 # base="Win32GUI" should be used only for Windows GUI app
 base = None
 if sys.platform == "win32":
@@ -13,6 +14,8 @@ if sys.platform == "win32":
 setup(
     name = "PPD Mover",
     description = "An app to help move files for using PPD",
-    options = {"build_exe": build_exe_options},
+    options = {
+        "build_exe": build_exe_options, 
+        },
     executables = [Executable("PPDmover_HatsuneMikuStyle.py", base=base)]
 )
