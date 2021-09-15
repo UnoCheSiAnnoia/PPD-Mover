@@ -1,3 +1,4 @@
+import shutil
 import tkinter as tk
 import os
 import sys
@@ -29,9 +30,8 @@ def saves_finding_error():
     if os.path.exists(textDir.get()):
         return
     else:
-        messagebox.showerror("File not found", "the program was unable to locate the saves folder, make sure it is "
-                                               "located into a folder called \"Saves\" and that the file is called "
-                                               "\"Saves_File.txt\", then restart the program")
+        messagebox.showerror("File not found", "Saves file or folder not found\n Make sure there is a \"Saves\" folder with \"Saves_File.txt\" in it.")
+        sys.exit()
 
 
 def set_text_location():
@@ -168,8 +168,7 @@ def read_start_from_file():
     if os.path.exists(dirtouse):
         textStartDir.set(dirtouse)
     elif dirtouse != "":
-        messagebox.showwarning("Directory not found", "the starting directory you set up was not found, if you are sure"
-                                                      " the directory exists, try to select it once more")
+        messagebox.showwarning("Directory not found", "The starting directory could not be located.\nPlease set it up again")
 
 
 def get_zip():
@@ -187,8 +186,7 @@ def unzip():
         tounzip.extractall(path=pathtoextract)
     else:
         if pathtoextract == "":
-            messagebox.showwarning("No location selected", "You haven't selected a directory to move the zip file to, p"
-                                                           "lease select one and try again")
+            messagebox.showwarning("No location selected", "You have not selected a location to move the file to.\nPlease select it and try again")
         else:
             messagebox.showerror("Location not found", "the location you selected to move the zip file into was not found")
 
@@ -252,7 +250,7 @@ def check_remove_zip():
 
 
 def select_video():
-    video = filedialog.askopenfilename(initialdir=vidStartingDir.get())
+    video = filedialog.askopenfilename(initialdir=vidStartingDir.get(), filetypes=[("MP4 files", "*.mp4")])
     if video != "":
         if os.path.exists(video):
             videoPath.set(video)
@@ -289,7 +287,7 @@ def move_video():
     video = tk.StringVar()
     song = tk.StringVar()
     if videoPath.get() == "" and selectedSongPath.get() == "":
-        messagebox.showwarning("no files selected", "you need to select a video and the destination for the video before proceeding")
+        messagebox.showwarning("no files selected", "Please select a video and the destination for the video")
         return
     else:
         if videoPath.get() == "":
@@ -311,4 +309,5 @@ def move_video():
                 messagebox.showerror("folder not found", "the program was unable to find the folder")
     pathSplit = os.path.split(video.get())
     videoName = pathSplit[1]
-    os.replace(video.get(), os.path.join(song.get(), videoName))
+    shutil.move(video.get(), os.path.join(song.get(), videoName))
+
