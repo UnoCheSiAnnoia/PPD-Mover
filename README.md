@@ -33,7 +33,7 @@ I also learned some basics of python at school for an activity so aside from the
 - [X] Update how the program looks because it is ugly
 - [ ] Add the possibility to drag and drop files
 - [X] Add a starting folder also for videos
-- [ ] Maybe make an actual release of this
+- [X] Maybe make an actual release of this
 - [ ] Remove some options from the main window and make a menu for them
 - [ ] Hide the saves (so not let them be a random .txt file)
 - [ ] Make this thing faster to use because it is really slow right now
