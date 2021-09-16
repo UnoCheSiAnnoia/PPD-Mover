@@ -1,9 +1,18 @@
+日本語のテキストは DeepL で翻訳されていますが、間違いがあるかもしれません。
+
 # PPD mover
 This project is a program that should help putting songs into the Project DIVA emulator, [PPD](https://projectdxxx.me/).   
-With this you should be able to select a zip file to unzip and directly move it into the selected folder.    
+With this you should be able to select a zip file to unzip and directly move it into the selected folder.   
+
+このプロジェクトは、[PPD](https://projectdxxx.me/)に曲を入れるのに役立つはずのプログラムです。[PPD](https://projectdxxx.me/)はProject DIVAのエムーレーター。
+これで、ZIPファイルを選択して解凍し、Songsフォルダに直接移動することができます。
 ### Disclamer
-I am a beginner at programming so this is probably not gonna be a really good project, but I am still trying what I can.   
+I am a beginner at programming so this is probably not gonna be good, but I am still trying to get this to work.   
+
+私はプログラミングの初心者なので、おそらくうまくいかないと思いますが、私はまだこれを動かそうとしています。
 ## How To Use
+[JP](#how-to-use-jp)
+
 an important thing to note is that this program works **only with zip files**.   
 1. to make this work you first need to select the songs folder, it is usually found in the KHC folder    
 on your disk, inside the PPD folder.    
@@ -17,11 +26,11 @@ Reasons why I put that button will be explained later.
 more things about why I am doing it like this later
 5. You can press the "move" button to move the video
 ## FAQ (but not really)
+[JP](#faq-jp)    
 Q: Did someone really make you questions?    
 A: No, I am making this up to explain some things is a fancy way.   
 Q: Why did you put that "save folder" button?
 A: I thought that someone might organize songs folders in various ways and might want to save a general folder, like the songs folder, and then select an exact folder everytime.   
-To be really honest, I don't know if what I said is doable in the current program so I might need to work on it
 Q: Why do i need to select a folder every time i want to put a video?    
 A: Because I have no idea on how to make this more efficient, sorry.   
 Q: When will this project be finished?   
@@ -33,7 +42,37 @@ I also learned some basics of python at school for an activity so aside from the
 - [X] Update how the program looks because it is ugly
 - [ ] Add the possibility to drag and drop files
 - [X] Add a starting folder also for videos
-- [ ] Maybe make an actual release of this
+- [X] Maybe make an actual release of this
 - [ ] Remove some options from the main window and make a menu for them
 - [ ] Hide the saves (so not let them be a random .txt file)
 - [ ] Make this thing faster to use because it is really slow right now
+
+
+
+## How To Use JP
+注意点としては、このプログラムは**zipファイル**でのみ動作するということです。
+1. この作業を行うためには、まずsongsフォルダを選択する必要があり、それは通常、ディスク上のKHCフォルダ    
+ディスクのPPDフォルダの中にあります。   
+選択した後、今後のプログラム使用のためにそれを保存したい場合は、「フォルダ保存」ボタンを押す必要があります。  
+このボタンを設置した理由は後述します。  
+2. 曲が入っているZIPファイルを選択します。
+   1.  *「change folder」ボタンを押すと、ZIPファイルを検索するときに開始するフォルダを変更できます。*
+3. "move "ボタンを押すと、ステップ1で選択した場所にファイルを解凍することができます。
+    1. *「remove .zip」にチェックを入れると、解凍後のZIPファイルが自動的に削除されます*。
+4. これで、ビデオファイルとそれを置くフォルダを選択することができます。  
+なぜこのようにしているかについては、後で詳しく説明します。
+5."move"ボタンを押すと、ビデオが移動します。
+
+## FAQ JP
+Q: 本当に誰かに質問されたの？     
+A: いや、これはちょっとした説明のために作ったものです。    
+Q: なぜ「Save Folder」ボタンを付けたのか？    
+A: 曲のフォルダを様々な方法で整理している人がいると思いますが、曲のフォルダのような一般的なフォルダを保存しておいて、毎回正確なフォルダを選択したいと思うことがあると思いま   
+Q: なぜビデオを入れるたびにフォルダを選択する必要があるのですか？    
+A: どうすればもっと効率的になるのか、アイデアが浮かばないからです、すみません。   
+Q: このプロジェクトはいつ完成するのですか？   
+A: これは私の最初のプロジェクトであり、手探りの状態であるため、このような簡単なプロジェクトでも時間がかかることがあります。   
+Q: このプロジェクトの前にも何か作っていましたか？    
+A: PythonでDiscordのボットを作ってみましたが、Unityのチュートリアルに従っただけでは不十分でしょうか？    
+また、学校のアクティビティでpythonの基礎を学んだので、bot以外にもpythonの基礎を知った上でこの作業を始めました。   
+
