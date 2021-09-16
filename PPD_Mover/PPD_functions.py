@@ -307,3 +307,30 @@ def move_video():
     pathSplit = os.path.split(video.get())
     videoName = pathSplit[1]
     shutil.move(video.get(), os.path.join(song.get(), videoName))
+
+
+def songs_select_dnd(event):
+    drag_and_drop(event, songsPath)
+
+
+def zip_select_dnd(event):
+    drag_and_drop(event, zipPath)
+
+
+def select_video_dnd(event):
+    drag_and_drop(event, videoPath)
+
+
+def select_song_dnd(event):
+    drag_and_drop(event, selectedSongPath)
+
+
+def drag_and_drop(event, variable):
+    event_split = event.data.split(" ")
+    count = 0
+    for _ in event_split:
+        count += 1
+    if count == 1:
+        variable.set(event.data)
+    else:
+        messagebox.showerror("Too many selected items", "the program can't accept more than one file")
