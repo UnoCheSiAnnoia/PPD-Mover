@@ -5,11 +5,12 @@ import sys
 from tkinter.constants import DISABLED
 from tkinter import font
 from PIL import ImageTk, Image
+from tkinterdnd2 import *
 
 
 def main():
     # main window setting
-    gui = tk.Tk()
+    gui = TkinterDnD.Tk()
     gui.geometry("450x450")
     gui.configure(background="#4f5454")
     gui.title("PPD mover")
@@ -24,17 +25,17 @@ def main():
     canv = tk.Canvas(gui, width=450, height=450, bg="#4f5454", bd=0, highlightcolor="#4f5454",highlightbackground="#4f5454")
     Miku1 = Image.open(os.path.join(sys.path[0], "IMG", "Hatsune miku ppd 1.png"))
     MikuImage = ImageTk.PhotoImage(Miku1)
-    backgroundMiku = canv.create_image(250, 250, image=MikuImage)
-    selectDirOutline = canv.create_text(76, 28, text="Select Directory", font=Underlined, fill="#4b5676")
-    selectDirText = canv.create_text(77, 29, text="Select Directory", font=Underlined, fill="White")
-    selZipOutline = canv.create_text(76, 128, text="Select .zip file", font=Underlined, fill="#4b5676")
-    selZipText = canv.create_text(77, 129, text="Select .zip file", font=Underlined, fill="White")
-    selMp4Outline = canv.create_text(76, 228, text="Select the mp4", font=Underlined, fill="#4b5676")
-    selMp4Text = canv.create_text(77, 229, text="Select the video", font=Underlined, fill="White")
-    foldTextOutline = canv.create_text(252, 228, text="Select the song folder", font=Underlined, fill="#4b5676")
-    selFoldText = canv.create_text(253, 229, text="Select the song folder", font=Underlined, fill="White")
-    removeZipOutline = canv.create_text(65, 381, text="Delete .zip", fill="#4b5676")
-    removeZipText = canv.create_text(64, 382, text="Delete .zip", fill="White")
+    canv.create_image(250, 250, image=MikuImage)
+    canv.create_text(76, 28, text="Select Directory", font=Underlined, fill="#4b5676")
+    canv.create_text(77, 29, text="Select Directory", font=Underlined, fill="White")
+    canv.create_text(76, 128, text="Select .zip file", font=Underlined, fill="#4b5676")
+    canv.create_text(77, 129, text="Select .zip file", font=Underlined, fill="White")
+    canv.create_text(76, 228, text="Select the mp4", font=Underlined, fill="#4b5676")
+    canv.create_text(77, 229, text="Select the video", font=Underlined, fill="White")
+    canv.create_text(252, 228, text="Select the song folder", font=Underlined, fill="#4b5676")
+    canv.create_text(253, 229, text="Select the song folder", font=Underlined, fill="White")
+    canv.create_text(65, 381, text="Delete .zip", fill="#4b5676")
+    canv.create_text(64, 382, text="Delete .zip", fill="White")
     canv.place(x=0, y=0)
 
     PPD.textDir = tk.StringVar()
@@ -54,6 +55,8 @@ def main():
     PPD.get_starting_dir_path()
 
     songsSelectEntry = tk.Entry(gui, textvariable=PPD.songsPath, state=DISABLED, disabledbackground="#5a676b", disabledforeground="white")
+    songsSelectEntry.drop_target_register(DND_FILES)
+    songsSelectEntry.dnd_bind("<<Drop>>", PPD.songs_select_dnd)
     songsSelectEntry.place(x=15, y=40)
 
     songsFolderFind = tk.Button(gui, text="select", command=PPD.get_songs_dir_path, activebackground="#55d1d0",background="#87e5cf")
@@ -65,6 +68,8 @@ def main():
     # Zip select UI
 
     zipSelectEntry = tk.Entry(gui, textvariable=PPD.zipPath, state=DISABLED, disabledbackground="#5a676b",disabledforeground="white")
+    zipSelectEntry.drop_target_register(DND_FILES)
+    zipSelectEntry.dnd_bind("<<Drop>>", PPD.zip_select_dnd)
     zipSelectEntry.place(x=15, y=140)
 
     zipFileFind = tk.Button(gui, text="Browse files", command=PPD.get_zip, activebackground="#55d1d0", background="#87e5cf")
@@ -78,23 +83,23 @@ def main():
 
     # Video select UI
 
-    selectVideoEntry = tk.Entry(gui, state=DISABLED, textvariable=PPD.videoPath, disabledbackground="#5a676b",
-                                disabledforeground="white")
+    selectVideoEntry = tk.Entry(gui, state=DISABLED, textvariable=PPD.videoPath, disabledbackground="#5a676b",disabledforeground="white")
+    selectVideoEntry.drop_target_register(DND_FILES)
+    selectVideoEntry.dnd_bind("<<Drop>>", PPD.select_video_dnd)
     selectVideoEntry.place(x=15, y=240)
 
-    selectSongEntry = tk.Entry(gui, state=DISABLED, textvariable=PPD.selectedSongPath, disabledbackground="#5a676b",
-                               disabledforeground="white")
+    selectSongEntry = tk.Entry(gui, state=DISABLED, textvariable=PPD.selectedSongPath, disabledbackground="#5a676b",disabledforeground="white")
+    selectSongEntry.drop_target_register(DND_FILES)
+    selectSongEntry.dnd_bind("<<Drop>>", PPD.select_song_dnd)
     selectSongEntry.place(x=190, y=240)
 
     selectVideoButton = tk.Button(text="Select", command=PPD.select_video, activebackground="#55d1d0", background="#87e5cf")
     selectVideoButton.place(x=16, y=268)
 
-    selectStartingVideoDir = tk.Button(text="Change directory", command=PPD.get_vid_dir, activebackground="#55d1d0",
-                                       background="#87e5cf")
+    selectStartingVideoDir = tk.Button(text="Change directory", command=PPD.get_vid_dir, activebackground="#55d1d0",background="#87e5cf")
     selectStartingVideoDir.place(x=65, y=268)
 
-    selectSongButton = tk.Button(text="Select folder", command=PPD.select_song, activebackground="#55d1d0",
-                                 background="#87e5cf")
+    selectSongButton = tk.Button(text="Select folder", command=PPD.select_song, activebackground="#55d1d0",background="#87e5cf")
     selectSongButton.place(x=190, y=268)
 
     moveVideoButton = tk.Button(text="Move video", command=PPD.move_video, activebackground="#55d1d0", background="#87e5cf")
