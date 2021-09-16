@@ -4,10 +4,7 @@ import os
 import sys
 from tkinter import filedialog
 from tkinter import messagebox
-from tkinter.constants import DISABLED
 import zipfile
-from tkinter import font
-from PIL import ImageTk, Image
 
 
 # variables
@@ -310,4 +307,3 @@ def move_video():
     pathSplit = os.path.split(video.get())
     videoName = pathSplit[1]
     shutil.move(video.get(), os.path.join(song.get(), videoName))
-

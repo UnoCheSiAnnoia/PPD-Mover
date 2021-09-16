@@ -2,10 +2,7 @@ import PPD_functions as PPD
 import tkinter as tk
 import os
 import sys
-from tkinter import filedialog
-from tkinter import messagebox
 from tkinter.constants import DISABLED
-import zipfile
 from tkinter import font
 from PIL import ImageTk, Image
 
