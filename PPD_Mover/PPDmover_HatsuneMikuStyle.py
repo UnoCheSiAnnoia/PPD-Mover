@@ -14,6 +14,7 @@ def main():
     gui.configure(background="#4f5454")
     gui.title("PPD mover")
     gui.resizable(False, False)
+    gui.iconbitmap(os.path.join(sys.path[0], "MIKUDAYO.ico"))
 
     # font setup
     Underlined = font.Font(gui, "TkDefaultFont")
