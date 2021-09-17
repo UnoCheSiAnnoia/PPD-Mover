@@ -3,7 +3,7 @@ from cx_Freeze import *
 
 # Dependencies are automatically detected, but it might need fine tuning.
 # "packages": ["os"] is used as example only
-build_exe_options = dict(include_files=["IMG/", "Saves/", "README.html," "MIKUDAYO.ico"])
+build_exe_options = dict(include_files=["IMG/", "Saves/", "README.html", "MIKUDAYO.ico"])
 
 # base="Win32GUI" should be used only for Windows GUI app
 base = None
