@@ -20,6 +20,7 @@ removeZipFile = None
 videoPath = None
 selectedSongPath = None
 vidStartingDir = None
+applicationPath = None
 
 
 def saves_finding_error():
@@ -32,7 +33,8 @@ def saves_finding_error():
 
 
 def set_text_location():
-    textDir.set(os.path.join(sys.path[0], "Saves", "Saves_File.txt"))
+    global applicationPath
+    textDir.set(os.path.join(applicationPath, "Saves", "Saves_File.txt"))
     saves_finding_error()
 
 

@@ -7,15 +7,21 @@ from tkinter import font
 from PIL import ImageTk, Image
 from tkinterdnd2 import *
 
-
 def main():
+    if getattr(sys, "frozen", False):
+        PPD.applicationPath = os.path.dirname(sys.executable)
+        pass #pyinstaller
+    elif __file__:
+        PPD.applicationPath = os.path.dirname(__file__)
+    
+    
     # main window setting
     gui = TkinterDnD.Tk()
     gui.geometry("450x450")
     gui.configure(background="#4f5454")
     gui.title("PPD mover")
     gui.resizable(False, False)
-    gui.iconbitmap(os.path.join(sys.path[0], "MIKUDAYO.ico"))
+    gui.iconbitmap(os.path.join(PPD.applicationPath, "MIKUDAYO.ico"))
 
     # font setup
     Underlined = font.Font(gui, "TkDefaultFont")
@@ -23,7 +29,7 @@ def main():
 
     # canvas setup
     canv = tk.Canvas(gui, width=450, height=450, bg="#4f5454", bd=0, highlightcolor="#4f5454",highlightbackground="#4f5454")
-    Miku1 = Image.open(os.path.join(sys.path[0], "IMG", "Hatsune miku ppd 1.png"))
+    Miku1 = Image.open(os.path.join(PPD.applicationPath, "IMG", "Hatsune miku ppd 1.png"))
     MikuImage = ImageTk.PhotoImage(Miku1)
     canv.create_image(250, 250, image=MikuImage)
     canv.create_text(76, 28, text="Select Directory", font=Underlined, fill="#4b5676")

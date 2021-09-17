@@ -1,0 +1,1 @@
+pyinstaller PPDmover_HatsuneMikuStyle.py --windowed --onedir -n "PPD Mover" --add-data "IMG/*;IMG" --add-data "Saves/*;Saves" --add-data "MIKUDAYO.ico;." --add-data "README.html;." --add-data "PPD_functions.py;." --icon=MIKUDAYO.ico --additional-hooks-dir=.
