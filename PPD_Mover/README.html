@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            PPD Mover
+        </title>
+        <style>
+            .title_link 
+            {
+                color:black;
+                text-align: center;
+                font-size: 200%;
+            }
+            .title_link:link, .title_link:visited, .title_link:hover, .title_link:active
+            {
+                color:black;
+                text-decoration: none;
+            }
+            .popup{
+                width: 200px;
+                max-height: 400px;
+                margin: 40px auto;
+                padding: 10px 20px;
+                position: relative;
+                color: black;
+                background-color: white;
+            }
+            .overlay{
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 100vh;
+                background: rgba(0,0,0,0.7);
+                text-align: center;
+                display: none;
+            }
+
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            var language = "English"
+            var showed = false
+            function swapLanguage() {
+                const b = document.getElementById("b")
+                if (language == "English") {
+                    japanese()
+                    b.innerHTML = "English"
+                    
+                }
+                else {
+                    english()
+                    b.innerHTML = "日本語"
+                }
+            }
+            
+            
+            function japanese() {
+                popup_show()
+                language = "Japanese"
+                const h2_1 = document.getElementById("1");
+                h2_1.innerHTML = "これは何ですか？";
+                const p_2 = document.getElementById("2");
+                p_2.innerHTML = "<a href=https://github.com/UnoCheSiAnnoia/PPD-Mover target=_blank>PPD Mover</a>は、曲を<a href=https://projectdxxx.me target=_blank>PPD</a>に入れるのに役立つプログラムです。<br>"+
+                "<a href=https://projectdxxx.me target=_blank>PPD</a>は、「Project DIVA」のゲーム用エミュレーターです。<br><br>"+
+                "私はプログラミングの初心者なので、最終的にうまくいくかどうかはわかりませんが、このプロジェクトに取り組んでいるので、自分のスキルでできる限り良いものにしたいと思っています";
+                const h2_3 = document.getElementById("3");
+                h2_3.innerHTML = "使い方"
+                const p_4 = document.getElementById("4");
+                p_4.innerHTML = "<b><i>すべてのファイルを手動で選択したくない場合は、すべてのエントリでファイルをドラッグすることができます。</i></b>";
+                const l1 = document.getElementById("s1");
+                const l2 = document.getElementById("s2");
+                const l3 = document.getElementById("s3");
+                const l4 = document.getElementById("s4");
+                const l5 = document.getElementById("s5");
+                const l6 = document.getElementById("s6");
+                const l7 = document.getElementById("s7");
+                const l8 = document.getElementById("s8");
+                const l9 = document.getElementById("s9");
+                const l10 = document.getElementById("s10");
+                const l11 = document.getElementById("s11");
+                l1.innerHTML = "「Select」ボタンを押して、「Songs」フォルダを選択します。探すには、PPDのフォルダを検索し、「Songs」フォルダが実行ファイルと同じ場所にあるはずです。";
+                l2.innerHTML = "選択したフォルダを保存しておきたい場合は、「save folder」ボタンを押すことができます。";
+                l3.innerHTML = "ここで、「Change directory」ボタンを押すと、曲を含む.zipファイルを選択するための開始ディレクトリを変更することができますが、そうしたくない場合は、次のステップに進んでください。";
+                l4.innerHTML = "「Browse files」を押して、.zipファイルを探す";
+                l5.innerHTML = "「Move」ボタンを押すと、選択したファイルが解凍され、「Songs」フォルダーに移動します。";
+                l6.innerHTML = "ビデオ選択の開始フォルダを変更したい場合は「Change directory」ボタンを、変更したくない場合は次のステップに進む";
+                l7.innerHTML = "「Select」ボタンを押して、移動する動画を選択する（.mp4のみ可)";
+                l8.innerHTML = "「Select folder」ボタンを押して、解凍した曲のフォルダを選択する（「Select directory」部分で選択したフォルダが開始フォルダとなる）。";
+                l9.innerHTML = "「Move video」を押すと、選択したビデオが先ほどのフォルダーに移動する";
+                l10.innerHTML = "「delete saves」を押すと、すべての保存データを削除することができます。";
+                l11.innerHTML = "「Delete .zip」にチェックを入れると、移動時にZIPファイルが削除されます";
+                const p_5 = document.getElementById("51");
+                p_5.innerHTML = "もしアプリのバグを見つけた場合は、githubのissueページに報告してください。";
+            }
+            function english() {
+                language = "English"
+                const h2_1 = document.getElementById("1");
+                h2_1.innerHTML = "What is this"
+                const p_2 = document.getElementById("2");
+                p_2.innerHTML = "<a href=https://github.com/UnoCheSiAnnoia/PPD-Mover target=_blank>PPD Mover</a> is a program that should help putting songs into <a href=https://projectdxxx.me target=_blank>PPD</a>.<br>"+
+                "<a href=https://projectdxxx.me/>PPD</a> is an emulator for the Project DIVA game.<br><br> "+
+                "I am a beginner at programming so I don't know if this will come out well in the end, but I am working on this project and I am trying to make it as good as I can with my skills";
+                const h2_3 = document.getElementById("3");
+                h2_3.innerHTML = "How To Use"
+                const p_4 = document.getElementById("4");
+                p_4.innerHTML = "<b><i>NOTE: you can drag a file in every entry if you don't want to manually select every file</b></i>";
+                const l1 = document.getElementById("s1");
+                const l2 = document.getElementById("s2");
+                const l3 = document.getElementById("s3");
+                const l4 = document.getElementById("s4");
+                const l5 = document.getElementById("s5");
+                const l6 = document.getElementById("s6");
+                const l7 = document.getElementById("s7");
+                const l8 = document.getElementById("s8");
+                const l9 = document.getElementById("s9");
+                const l10 = document.getElementById("s10");
+                const l11 = document.getElementById("s11");
+                l1.innerHTML = "Press the \"select\" button and select the \"songs\" folder. To find it, search for the folder of PPD, the songs folder should be in the same place of the executable";
+                l2.innerHTML = "If you want to save the folder you selected for future use, you can press the \"save folder\" button, if you don't want to, go to the next step";
+                l3.innerHTML = "Now you can press the \"Change directory\" button to change the starting directory for selecting the .zip file containing the song, if you don't want to, go to the next step";
+                l4.innerHTML = "Press \"Browse files\" to search for a .zip file";
+                l5.innerHTML = "Press \"Move\" to unzip and move the file you selected to the songs folder";
+                l6.innerHTML = "If you want to change the starting folder for the video selection, you can press the \"Change directory\" button, if you don't want to, go to the next step";
+                l7.innerHTML = "Press the \"Select\" button to select the video to move (only mp4 are allowed)";
+                l8.innerHTML = "Press the \"Select folder\" button and select the folder for the song you have extracted (the starting folder is the one you selected in the \"select directory\" part)";
+                l9.innerHTML = "Press \"Move video\" to move the video selected to the folder you just selected";
+                l10.innerHTML = "You can press \"delete saves\" to delete all the saves (I know, it wasn't obvious)";
+                l11.innerHTML = "You can check the \"Delete .zip\" checkbox to delete the zip file when you move it";
+                const p_5 = document.getElementById("51");
+                p_5.innerHTML = "If you find a bug in the app, please report it on the issue page on github so hopefully I will be able to fix it"
+            }
+
+
+            function popup_show() {
+                if(showed == false) {
+                    document.getElementById("pop").style.display="block";
+                    showed = true
+                }
+            }
+            function close_popup() {
+                document.getElementById("pop").style.display="none";
+            }
+        </script>
+    </head>
+    <body>
+        <h1 style="text-align: center;">
+            <a class="title_link" href="https://github.com/UnoCheSiAnnoia/PPD-Mover" target="_blank">PPD Mover</a>
+        </h1>
+        <div style="padding-left: 15px;">
+            <button type="button" onclick="swapLanguage()" id="b">
+                日本語
+            </button>
+            <h2 id="1">
+                What is this
+            </h2>
+            <p id="2">
+                <a href="https://github.com/UnoCheSiAnnoia/PPD-Mover" target="_blank">PPD Mover</a> is a program that should help putting songs into <a href="https://projectdxxx.me" target="_blank">PPD</a>.<br>
+                <a href="https://projectdxxx.me/">PPD</a> is an emulator for the Project DIVA game.<br><br>
+                I am a beginner at programming so I don't know if this will come out well in the end, but I am working on this project and I
+                am trying to make it as good as I can with my skills
+            </p>
+            <hr>
+            <h2 id="3">
+            How To Use
+            </h2>
+            <p id="4" style=
+                    "background-color: lightgoldenrodyellow;
+                    border: 1px solid black;
+                    border-radius: 3px;
+                    padding: 2px;
+                    max-width: 600px;
+                    margin-left: 15px;
+                    ">
+                <b><i>NOTE: you can drag a file in every entry if you don't want to manually select every file</i></b><br>
+            </p>
+            <p>
+                <ol style="font-weight: bolder;">
+                    <li><span style="font-weight: normal;" id="s1">Press the "select" button and select the "songs" folder. To find it, search for the folder of PPD, the songs folder should be in the same place of the executable</span></li>
+                    <li><span style="font-weight: normal;" id="s2">If you want to save the folder you selected for future use, you can press the "save folder" button, if you don't want to, go to the next step</span></li>
+                    <li><span style="font-weight: normal;" id="s3">Now you can press the "Change directory" button to change the starting directory for selecting the .zip file containing the song, if you don't want to, go to the next step</span></li>
+                    <li><span style="font-weight: normal;" id="s4">Press "Browse files" to search for a .zip file</span></li>
+                    <li><span style="font-weight: normal;" id="s5">Press "Move" to unzip and move the file you selected to the songs folder</span></li>
+                    <li><span style="font-weight: normal;" id="s6">If you want to change the starting folder for the video selection, you can press the "Change directory" button, if you don't want to, go to the next step</span></li>
+                    <li><span style="font-weight: normal;" id="s7">Press the "Select" button to select the video to move (only mp4 are allowed)</span></li>
+                    <li><span style="font-weight: normal;" id="s8">Press the "Select folder" button and select the folder for the song you have extracted (the starting folder is the one you selected in the "select directory" part)</span></li>
+                    <li><span style="font-weight: normal;" id="s9">Press "Move video" to move the video selected to the folder you just selected</span></li>
+                </ol>
+            </p>
+            <p>
+                <b>BONUS:</b><br>
+                <ol style="font-weight: bolder;">
+                    <li><span style="font-weight: normal;" id="s10">You can press "delete saves" to delete all the saves (I know, it wasn't obvious)</span></li>
+                    <li><span style="font-weight: normal;" id="s11">You can check the "Delete .zip" checkbox to delete the zip file when you move it</span></li>
+                </ol>
+            </p>
+            <hr>
+            <p>
+                <span id="51">If you find a bug in the app, please report it on the issue page on github so hopefully I will be able to fix it</span>
+            </p>
+        </div>
+        <div class="overlay" id="pop">
+            <div class="popup">
+                <p>
+                    日本語の翻訳は DeepL で作られているので、誤りがあるかもしれません。
+                </p>
+                <button type="button" onclick="close_popup()">
+                    OK!
+                </button>
+            </div>
+        </div>
+    </body>
+</html>
