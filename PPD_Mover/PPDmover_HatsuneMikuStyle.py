@@ -3,7 +3,7 @@ import tkinter as tk
 import os
 import sys
 from tkinter.constants import DISABLED
-from tkinter import font
+from tkinter import Menu, font
 from PIL import ImageTk, Image
 from tkinterdnd2 import *
 
@@ -40,8 +40,8 @@ def main():
     canv.create_text(77, 229, text="Select the video", font=Underlined, fill="White")
     canv.create_text(252, 228, text="Select the song folder", font=Underlined, fill="#4b5676")
     canv.create_text(253, 229, text="Select the song folder", font=Underlined, fill="White")
-    canv.create_text(65, 381, text="Delete .zip", fill="#4b5676")
-    canv.create_text(64, 382, text="Delete .zip", fill="White")
+    # canv.create_text(65, 381, text="Delete .zip", fill="#4b5676")
+    # canv.create_text(64, 382, text="Delete .zip", fill="White")
     canv.place(x=0, y=0)
 
     PPD.textDir = tk.StringVar()
@@ -55,6 +55,11 @@ def main():
     PPD.videoPath = tk.StringVar()
     PPD.selectedSongPath = tk.StringVar()
     PPD.vidStartingDir = tk.StringVar()
+
+
+    # Menubar setup
+    menubar = tk.Menu(gui)
+    filemenu = tk.Menu(menubar, tearoff=0)
 
     # Song select UI
 
@@ -84,8 +89,10 @@ def main():
     moveFileButton = tk.Button(gui, text="Move", command=PPD.move_file, activebackground="#55d1d0", background="#87e5cf")
     moveFileButton.place(x=160, y=136)
 
-    changeDirectory = tk.Button(gui, text="Change directory", command=PPD.get_starting_folder, activebackground="#55d1d0",background="#87e5cf")
-    changeDirectory.place(x=96, y=168)
+    # changeDirectory = tk.Button(gui, text="Change directory", command=PPD.get_starting_folder, activebackground="#55d1d0",background="#87e5cf")
+    # changeDirectory.place(x=96, y=168)
+
+    filemenu.add_command(label="Change .zip directory",command=PPD.get_starting_folder)
 
     # Video select UI
 
@@ -102,14 +109,16 @@ def main():
     selectVideoButton = tk.Button(text="Select", command=PPD.select_video, activebackground="#55d1d0", background="#87e5cf")
     selectVideoButton.place(x=16, y=268)
 
-    selectStartingVideoDir = tk.Button(text="Change directory", command=PPD.get_vid_dir, activebackground="#55d1d0",background="#87e5cf")
-    selectStartingVideoDir.place(x=65, y=268)
+    # selectStartingVideoDir = tk.Button(text="Change directory", command=PPD.get_vid_dir, activebackground="#55d1d0",background="#87e5cf")
+    # selectStartingVideoDir.place(x=65, y=268)
 
     selectSongButton = tk.Button(text="Select folder", command=PPD.select_song, activebackground="#55d1d0",background="#87e5cf")
     selectSongButton.place(x=190, y=268)
 
     moveVideoButton = tk.Button(text="Move video", command=PPD.move_video, activebackground="#55d1d0", background="#87e5cf")
     moveVideoButton.place(x=325, y=235)
+
+    filemenu.add_command(label="Change video directory", command=PPD.get_starting_folder)
 
     # Delete saves UI
 
@@ -120,11 +129,15 @@ def main():
 
     PPD.check_remove_zip_initial()
 
-    removeZipBox = tk.Checkbutton(variable=PPD.removeZipFile, command=PPD.check_remove_zip, onvalue=True, offvalue=False,
-                                  background="#4f5454", activebackground="#4f5454", selectcolor="#5a676b", fg="White",
-                                  activeforeground="White")
-    removeZipBox.place(x=10, y=370)
+    # removeZipBox = tk.Checkbutton(variable=PPD.removeZipFile, command=PPD.check_remove_zip, onvalue=True, offvalue=False,
+                                  # background="#4f5454", activebackground="#4f5454", selectcolor="#5a676b", fg="White",
+                                  # activeforeground="White")
+    # removeZipBox.place(x=10, y=370)
 
+    filemenu.add_checkbutton(label = "Delete .zip", onvalue=True, offvalue=False, variable=PPD.removeZipFile, command=PPD.check_remove_zip)
+
+    menubar.add_cascade(label="File",menu=filemenu)
+    gui.config(menu=menubar)
     gui.mainloop()
 
 
